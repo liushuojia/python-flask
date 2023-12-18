@@ -1,5 +1,5 @@
 
-.PHONY:all run pip help
+.PHONY:all run pip help git
 
 all: run
 
@@ -10,6 +10,11 @@ pip:
 	pip3.9 install flask
 	pip3.9 install sqlalchemy
 	pip3.9 install redis
+
+git:
+	git add .
+	git commit -m "change"
+	git push
 
 help:
 	@echo "make help - 查看帮助"

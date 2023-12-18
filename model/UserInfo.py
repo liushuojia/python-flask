@@ -1,10 +1,9 @@
 # UserInfo.py
-import time
-from model.Mysql import (
+from utils.Mysql import (
     Base,
     engine,
 )
-from model.DB import (
+from utils.DB import (
     DB,
 )
 import datetime
@@ -13,7 +12,6 @@ from sqlalchemy import (
     Integer,
     String,
     Enum,
-    DECIMAL,
     DateTime,
     Boolean,
     UniqueConstraint,
@@ -58,6 +56,7 @@ class UserInfo(Base, DB):
         if "last_update_time" in o: u.last_update_time = o["last_update_time"]
         if "delete_status" in o: u.delete_status = o["delete_status"]
         return u
+
 
 
 if __name__ == "__main__":

@@ -5,7 +5,13 @@ from flask import Flask
 from flask import (request, make_response)
 import json
 from model.UserInfo import *
-from api.UserInfo import query_user
+from api.UserInfo import (
+    query_user,
+    create_user,
+    get_user_by_id,
+    update_user_by_id,
+    delete_user_by_id,
+)
 
 app = Flask(__name__)
 
@@ -31,62 +37,12 @@ def signin():
         return '<h3>Hello, admin!</h3>'
     return '<h3>Bad username or password.</h3>'
 
-# get /user
+# user
 app.add_url_rule('/user', methods=['GET'], view_func=query_user)
-# @app.route('/user', methods=['GET'])
-# def query_user():
-#     userList: list[UserInfo] = UserInfo().Query(limit=10, offset=5)
-#     res = []
-#     for u in userList:
-#         res.append(u.toJson())
-#
-#     return res
-
-
-
-@app.route('/user', methods=['POST'])
-def create_user():
-    request_str = request.get_data()
-    request_dict = json.loads(request_str)
-
-    u = UserInfo.fromJson(request_dict)
-    print(request_str)
-    print(request_dict)
-    print(u.id)
-    print(u.name)
-
-    u.Create()
-
-
-    # user = UserInfo(
-    #     id=0,
-    #     name="刘硕嘉"
-    # )
-    # print(user)
-    # user.create()
-
-    # response = Response("create_user")
-    # response.status_code = 200
-    # response.status = "200 Ok"
-    # response.data = request_dict
-    return make_response(request_dict,200)
-
-
-@app.route('/user/<int:id>', methods=['GET'])
-def get_user_by_id(id):
-
-    user: UserInfo = UserInfo()
-    u: UserInfo = user.Select(id)
-
-    if u is not None:
-        return u.toJson()
-
-    return "数据不存在"
-
-
-@app.route('/user/<int:id>', methods=['PUT'])
-def update_user_by_id(id):
-    return '%d\'s id' % id
+app.add_url_rule('/user', methods=['POST'], view_func=create_user)
+app.add_url_rule('/user/<int:id>', methods=['GET'], view_func=get_user_by_id)
+app.add_url_rule('/user/<int:id>', methods=['PUT'], view_func=update_user_by_id)
+app.add_url_rule('/user/<int:id>', methods=['DELETE'], view_func=delete_user_by_id)
 
 
 if __name__ == '__main__':

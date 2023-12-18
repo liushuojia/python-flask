@@ -1,5 +1,13 @@
 # Mysql.py
 
+# ==============================
+HOST = "127.0.0.1"
+PORT = 3306
+USERNAME = "root"
+PASSWORD = "liushuojia"
+DB = "abc"
+# ==============================
+
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import (
     create_engine
@@ -8,13 +16,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # 基础类
 Base = declarative_base()
-
-# ==============================
-HOST = "127.0.0.1"
-PORT = 3306
-USERNAME = "root"
-PASSWORD = "liushuojia"
-DB = "abc"
 
 # 创建引擎
 engine = create_engine(

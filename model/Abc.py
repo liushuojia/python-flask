@@ -1,8 +1,4 @@
-from model.Mysql import (
-    Base,
-    engine,
-)
-from model.DB import (
+from utils.DB import (
     DB,
 )
 from model.Model import (

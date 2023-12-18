@@ -4,7 +4,7 @@ import time
 
 from werkzeug.routing import ValidationError
 
-from model.Mysql import (
+from utils.Mysql import (
     Base,
     engine,
     Session,
@@ -84,7 +84,7 @@ def Delete(info, id: int, session = None):
 
 def Select(info, id: int, session = None):
     if id <= 0:
-        return False
+        return None
 
     if session is None:
         session = scoped_session(Session)
@@ -156,15 +156,20 @@ class DB:
     def Create(self, session = None):
         return Create(self, session)
 
-    def Update(self, info, session = None):
+    def Update(self, info, id = None, session = None):
+        if id is not None:
+            Update(self.__class__, id, info, session)
+
         return Update(self.__class__, self.id, info, session)
 
-    def Delete(self, session = None):
-        return Delete(self.__class__, session)
+    def Delete(self, id: int, session = None):
+        return Delete(self.__class__, id, session)
 
-    def Select(self, id: int, session = None):
-        print(self.__class__)
-        return Select(self.__class__, id, session)
+    def Select(self, id = None, session = None):
+        if id is not None:
+            return Select(self.__class__, id, session)
+
+        return Select(self.__class__, self.id, session)
 
     def Query(self, filter = None, limit: int = 0, offset: int = 0, session = None):
         return Query(self.__class__, filter, limit, offset, session)
