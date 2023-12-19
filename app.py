@@ -1,11 +1,11 @@
 # app.py
 import datetime
 import threading
+import time
 
 from flask import Flask
 from flask import (request, make_response)
-import json
-
+from utils.Redis import Subscribe, Publish
 from api.UserInfo import (
     query_user,
     create_user,
@@ -49,5 +49,26 @@ app.add_url_rule('/user/<int:id>', methods=['DELETE'], view_func=delete_user_by_
 app.add_url_rule('/cache/user', methods=['GET'], view_func=cache_user)
 app.add_url_rule('/cache/user/<int:id>', methods=['GET'], view_func=select_cache_user)
 
+def subscribeCallback(message):
+    print(message)
+
+def SubscribeAction():
+    Subscribe(["int_channel", "aa"], subscribeCallback)
+
+def PublishAction():
+    for i in range(10):
+        Publish("int_channel", i * 2)
+        print(f"生产: {i * 2}")
+        time.sleep(2)
+
+
 if __name__ == '__main__':
+    subscribe = threading.Thread(target=SubscribeAction, daemon=True)
+    # 启动线程
+    subscribe.start()
+
+    # publish = threading.Thread(target=PublishAction, daemon=True)
+    # # 启动线程
+    # publish.start()
+
     app.run(host="127.0.0.1", port=8080, debug=True)

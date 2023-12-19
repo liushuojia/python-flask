@@ -1,10 +1,6 @@
-import json
-
 
 from model.UserInfo import UserInfo
 from utils.Redis import *
-from utils.MyJSONEncoder import MyJSONEncoder
-from flask import (request, make_response)
 
 # 缓存可以在变更数据时创建，
 # 暂不考虑到雪崩及穿透

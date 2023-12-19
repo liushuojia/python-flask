@@ -7,4 +7,4 @@
     对象使用DB.py基类，
 
 ## 缓存使用redis 
-    其中python为解释型
+    其中python为解释型语言
