@@ -85,7 +85,7 @@ def create_user():
     if id > 0:
         return "创建成功"
 
-    return str(u.Create())
+    return "创建失败"
 
 def get_user_by_id(id):
 
