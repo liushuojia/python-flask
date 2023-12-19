@@ -1,5 +1,12 @@
 # Mysql.py
 
+
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import (
+    create_engine,
+)
+from sqlalchemy.ext.declarative import declarative_base
+
 # ==============================
 HOST = "127.0.0.1"
 PORT = 3306
@@ -8,11 +15,6 @@ PASSWORD = "liushuojia"
 DB = "abc"
 # ==============================
 
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import (
-    create_engine
-)
-from sqlalchemy.ext.declarative import declarative_base
 
 # 基础类
 Base = declarative_base()

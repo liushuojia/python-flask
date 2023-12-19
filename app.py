@@ -1,21 +1,23 @@
 # app.py
 import datetime
+import threading
 
 from flask import Flask
 from flask import (request, make_response)
 import json
-from model.UserInfo import *
+
 from api.UserInfo import (
     query_user,
     create_user,
     get_user_by_id,
     update_user_by_id,
     delete_user_by_id,
+    cache_user,
+    select_cache_user,
 )
 
+
 app = Flask(__name__)
-
-
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -43,7 +45,9 @@ app.add_url_rule('/user', methods=['POST'], view_func=create_user)
 app.add_url_rule('/user/<int:id>', methods=['GET'], view_func=get_user_by_id)
 app.add_url_rule('/user/<int:id>', methods=['PUT'], view_func=update_user_by_id)
 app.add_url_rule('/user/<int:id>', methods=['DELETE'], view_func=delete_user_by_id)
-
+# user cache
+app.add_url_rule('/cache/user', methods=['GET'], view_func=cache_user)
+app.add_url_rule('/cache/user/<int:id>', methods=['GET'], view_func=select_cache_user)
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8080, debug=True)

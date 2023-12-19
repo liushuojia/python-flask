@@ -1,10 +1,18 @@
 # UserInfo.py
+# from typing import Optional
+import json
+
 from utils.Mysql import (
     Base,
     engine,
 )
 from utils.DB import (
     DB,
+    Create,
+    Select,
+    Update,
+    Delete,
+    Query,
 )
 import datetime
 from sqlalchemy import (
@@ -42,21 +50,6 @@ class UserInfo(Base, DB):
         UniqueConstraint("name", "age"),  # 联合唯一约束
         Index("name", "addr", unique=True),       # 联合唯一索引
     )
-
-    @staticmethod
-    def fromJson(o):
-        u = UserInfo()
-        if "id" in o: u.id = o["id"]
-        if "name" in o: u.name = o["name"]
-        if "age" in o: u.age = o["age"]
-        if "phone" in o: u.phone = o["phone"]
-        if "address" in o: u.address = o["address"]
-        if "gender" in o: u.gender = o["gender"]
-        if "create_time" in o: u.create_time = o["create_time"]
-        if "last_update_time" in o: u.last_update_time = o["last_update_time"]
-        if "delete_status" in o: u.delete_status = o["delete_status"]
-        return u
-
 
 
 if __name__ == "__main__":
