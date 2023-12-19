@@ -7,16 +7,13 @@ from utils.Redis import *
 
 CacheKey = "user"
 
-def cacheBuildAll():
-    userList: list[UserInfo] = UserInfo().Query()
-    for u in userList:
-        HSet(CacheKey, str(u.id), u.to_json())
-
 def user_cache_list():
 
     f = Exists(CacheKey)
     if not f:
-        cacheBuildAll()
+        userList: list[UserInfo] = UserInfo().Query()
+        for u in userList:
+            HSet(CacheKey, str(u.id), u.to_json())
 
     d = HGetAll(CacheKey)
     if len(d) <= 0:
@@ -26,6 +23,13 @@ def user_cache_list():
     return userList
 
 def user_cache_select(id):
+
+    f = HExists(CacheKey, id)
+    if not f:
+        user = UserInfo(id=id).Select()
+        if user is not None:
+            HSet(CacheKey, str(id), user.to_json())
+
     s = HGet(CacheKey, id)
     if s is None:
         return None
