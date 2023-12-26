@@ -1,6 +1,5 @@
 # UserInfo.py
 # from typing import Optional
-import json
 
 from utils.Mysql import (
     Base,

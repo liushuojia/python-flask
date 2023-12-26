@@ -1,15 +1,13 @@
 
-.PHONY:all run pip help git
+.PHONY:all run install help git
 
 all: run
 
 run:
 	python3.9 app.py
 
-pip:
-	pip3.9 install flask
-	pip3.9 install sqlalchemy
-	pip3.9 install redis
+install:
+	pip3.9 install -r requirements.txt
 
 git:
 	git add .
